@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>VidCube</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">a
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <style>
     *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
     :root{
@@ -28,8 +28,8 @@
     #hbg:hover{background:var(--surface2)}
     #hbg svg{width:22px;height:22px;fill:var(--text)}
     #logo{cursor:pointer;flex-shrink:0;display:flex;align-items:center}
-    #logo img{height:48px;width:auto}
-    #search-wrap{flex:1;display:flex;align-items:center;max-width:560px;margin:0 auto}
+    #logo img{height:48px;width:auto;max-width:120px;object-fit:contain}
+    #search-wrap{flex:1;display:flex;align-items:center;max-width:560px;margin:0 auto;min-width:0}
     #sbox{display:flex;flex:1;border:1.5px solid var(--border);border-radius:24px 0 0 24px;background:var(--surface);overflow:hidden;transition:border-color .2s}
     #sbox:focus-within{border-color:var(--blue)}
     #sin{flex:1;background:none;border:none;outline:none;color:var(--text);font-size:14px;padding:8px 16px}
@@ -37,7 +37,6 @@
     #sgo{background:var(--surface2);border:1.5px solid var(--border);border-left:none;border-radius:0 24px 24px 0;color:var(--text);cursor:pointer;padding:8px 16px;font-size:16px}
     #sgo:hover{background:var(--surface3)}
     #hdr-right{display:flex;align-items:center;gap:6px;flex-shrink:0}
-    #search-wrap{flex:1;display:flex;align-items:center;max-width:560px;margin:0 auto;min-width:0}
     .hbtn{background:none;border:none;color:var(--text);width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:background .15s;position:relative;flex-shrink:0}
     .hbtn:hover{background:var(--surface2)}
     .hbtn svg{width:20px;height:20px;fill:var(--text)}
@@ -49,7 +48,6 @@
     #user-av img{width:100%;height:100%;object-fit:cover}
     #signin-btn{background:none;border:1.5px solid var(--blue);color:var(--blue);border-radius:20px;padding:6px 14px;cursor:pointer;font-size:13px;font-weight:600;white-space:nowrap;transition:.15s}
     #signin-btn:hover{background:var(--blue);color:#fff}
-    #logo img{height:48px;width:auto;max-width:120px;object-fit:contain}
 
     /* SIDEBAR */
     #sidebar{position:fixed;top:var(--hh);left:0;bottom:0;width:var(--sw);background:var(--bg);border-right:1px solid var(--border);padding:10px 0;overflow-y:auto;overflow-x:hidden;z-index:150;transition:width .2s,transform .2s;scrollbar-width:none}
@@ -164,8 +162,6 @@
     .comment-author:hover{text-decoration:underline}
     .comment-time{font-size:11px;color:var(--text2);margin-left:6px}
     .comment-text{font-size:14px;line-height:1.5;margin-top:4px}
-    .no-auth-msg{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;font-size:13px;color:var(--text2)}
-    .no-auth-msg button{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:7px 14px;cursor:pointer;font-size:13px;font-weight:600;margin-top:8px}
 
     /* PLAYER RIGHT */
     #pl-right{width:370px;flex-shrink:0;padding-top:4px}
@@ -282,6 +278,7 @@
     .progress .fill{height:100%;background:var(--blue);border-radius:99px;transition:width .3s}
     .sql-box{background:var(--bg);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:11px;font-family:monospace;color:#7ec8e3;white-space:pre-wrap;overflow-x:auto;max-height:220px;overflow-y:auto;margin:10px 0}
     .setup-note{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:12px;font-size:13px;color:var(--text2);margin-bottom:10px;line-height:1.5}
+    .upload-status{font-size:13px;padding:8px 0;color:var(--text2)}
 
     /* TOAST */
     #toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%) translateY(60px);background:var(--surface3);border:1px solid var(--border);color:var(--text);padding:9px 18px;border-radius:9px;font-size:13px;z-index:9999;transition:transform .25s;pointer-events:none}
@@ -302,23 +299,12 @@
       #vgrid{grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;padding:12px}
     }
     @media(max-width:640px){
-      /* Sidebar hidden off-screen, slides in on .sb-open */
-      #sidebar{
-        transform:translateX(-100%);
-        width:260px!important;
-        z-index:400;
-        top:0;
-        bottom:0;
-        padding-top:calc(var(--hh) + 8px);
-        box-shadow:6px 0 30px rgba(0,0,0,.7);
-      }
+      #sidebar{transform:translateX(-100%);width:260px!important;z-index:400;top:0;bottom:0;padding-top:calc(var(--hh) + 8px);box-shadow:6px 0 30px rgba(0,0,0,.7)}
       body.sb-open #sidebar{transform:translateX(0)}
       #sb-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:390}
       body.sb-open #sb-overlay{display:block}
       #main{margin-left:0!important}
       body.mini #main{margin-left:0!important}
-
-      /* Header: shrink logo, hide bell, keep user-av + sign-in */
       #logo img{height:34px;max-width:90px}
       .hbtn{display:none}
       #upload-btn{padding:7px 9px;border-radius:50%}
@@ -326,31 +312,19 @@
       #signin-btn{font-size:12px;padding:5px 10px}
       #search-wrap{margin:0;max-width:none;min-width:0}
       #sbox{border-radius:20px 0 0 20px}
-
-      /* Grid */
       #vgrid{grid-template-columns:1fr 1fr;gap:8px;padding:10px}
       .vtitle{font-size:12px}
       .vstats{font-size:10px}
       .vav{width:28px;height:28px}
-
-      /* Player */
       #player-inner{flex-direction:column;padding:10px;gap:14px}
       #p-title{font-size:16px}
       #p-meta{flex-direction:column;align-items:flex-start;gap:8px}
       #p-acts{gap:5px}
       .ap{padding:5px 10px;font-size:12px}
-
-      /* Channel page */
       #chan-hdr h1{font-size:18px}
-
-      /* History */
       .hist-th{width:120px;height:68px}
-
-      /* Search results */
       .sri{flex-direction:column}
       .sri-th{width:100%;height:180px}
-
-      /* Sidebar sign-in button */
       #sb-signin{display:flex!important}
     }
     @media(max-width:380px){
@@ -369,7 +343,7 @@
     <svg viewBox="0 0 24 24"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"/></svg>
   </button>
   <div id="logo" onclick="goHome()">
-    <img src="/logo.png" alt="VidCube"/>
+    <img src="/logo.png" alt="VidCube" onerror="this.style.display='none';this.parentNode.innerHTML='<span style=\'font-size:20px;font-weight:800;color:var(--accent)\'>VidCube</span>'"/>
   </div>
   <div id="search-wrap">
     <div id="sbox"><input type="text" id="sin" placeholder="Search VidCube..."/></div>
@@ -428,7 +402,6 @@
     <svg class="nic" viewBox="0 0 24 24"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.56-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.63-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.03-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/></svg>
     <span class="nlbl">DB Setup</span><span class="nlbls">Setup</span>
   </div>
-  <!-- Sign In / User section at bottom of sidebar (mobile) -->
   <div id="sb-signin" style="display:none;margin:12px 8px 0;flex-direction:column;gap:6px">
     <div class="sep" style="margin:0 0 8px"></div>
     <div id="sb-user-row" style="display:none;align-items:center;gap:10px;padding:8px 10px;background:var(--surface2);border-radius:10px;cursor:pointer" onclick="handleAvatarClick()">
@@ -537,8 +510,6 @@
         <button id="p-sub" onclick="requireAuth(toggleSub)">Subscribe</button>
       </div>
       <div id="p-desc"><div class="ds" id="p-desc-s"></div><div class="dt" id="p-desc-t"></div></div>
-
-      <!-- COMMENTS -->
       <div id="comments-section">
         <h3 id="comments-count-h">Comments</h3>
         <div id="comment-form">
@@ -575,7 +546,6 @@
 </div>
 
 <!-- MODALS -->
-
 <!-- AUTH -->
 <div class="mov" id="m-auth">
   <div class="mo">
@@ -630,6 +600,7 @@
     </div>
     <input type="file" id="vid-file" accept="video/*" style="display:none" onchange="handleVidFile(this)"/>
     <div class="progress" id="upload-prog"><div class="fill" id="upload-fill" style="width:0%"></div></div>
+    <div id="upload-status" class="upload-status"></div>
     <div class="mf"><label>Title *</label><input type="text" id="f-vtitle" placeholder="My awesome video"/></div>
     <div class="mf"><label>Description</label><textarea id="f-vdesc" placeholder="Describe your video..."></textarea></div>
     <div class="mf"><label>Tags (comma separated)</label><input type="text" id="f-vtags" placeholder="Gaming, Tutorial, Funny"/></div>
@@ -685,15 +656,24 @@
 // ── CONFIG ──
 const SB = 'https://cxjdalgzmacmphrkuxwh.supabase.co';
 const KEY = 'sb_publishable_I9G7amKj-kdvVnFJ5_qVqA_4kRH9C0n';
+const BUCKET = 'vidcube'; // must match exactly what you created in Supabase Storage
 
-const SETUP_SQL = `-- VidCube full setup (run in Supabase SQL Editor)
--- Safe to run multiple times
+const SETUP_SQL = `-- VidCube full setup
+-- Run in Supabase SQL Editor
+
+-- Drop and recreate cleanly
+DROP TABLE IF EXISTS public.watch_history;
+DROP TABLE IF EXISTS public.comments;
+DROP TABLE IF EXISTS public.subscriptions;
+DROP TABLE IF EXISTS public.video_likes;
+DROP TABLE IF EXISTS public.videos;
+DROP TABLE IF EXISTS public.channels;
 
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
--- Tables
-CREATE TABLE IF NOT EXISTS public.channels (
+CREATE TABLE public.channels (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
+  user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL,
   name TEXT NOT NULL,
   handle TEXT UNIQUE NOT NULL,
   description TEXT DEFAULT '',
@@ -702,10 +682,8 @@ CREATE TABLE IF NOT EXISTS public.channels (
   subscribers INTEGER DEFAULT 0,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
--- Add user_id to channels if it doesn't already exist (handles existing tables)
-ALTER TABLE public.channels ADD COLUMN IF NOT EXISTS user_id UUID REFERENCES auth.users(id) ON DELETE SET NULL;
 
-CREATE TABLE IF NOT EXISTS public.videos (
+CREATE TABLE public.videos (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   channel_id UUID REFERENCES public.channels(id) ON DELETE CASCADE,
   title TEXT NOT NULL,
@@ -719,17 +697,20 @@ CREATE TABLE IF NOT EXISTS public.videos (
   tags TEXT[] DEFAULT '{}',
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
-CREATE TABLE IF NOT EXISTS public.video_likes (
+
+CREATE TABLE public.video_likes (
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   video_id UUID NOT NULL REFERENCES public.videos(id) ON DELETE CASCADE,
   PRIMARY KEY (user_id, video_id)
 );
-CREATE TABLE IF NOT EXISTS public.subscriptions (
+
+CREATE TABLE public.subscriptions (
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   channel_id UUID NOT NULL REFERENCES public.channels(id) ON DELETE CASCADE,
   PRIMARY KEY (user_id, channel_id)
 );
-CREATE TABLE IF NOT EXISTS public.comments (
+
+CREATE TABLE public.comments (
   id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
   video_id UUID NOT NULL REFERENCES public.videos(id) ON DELETE CASCADE,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
@@ -737,61 +718,47 @@ CREATE TABLE IF NOT EXISTS public.comments (
   content TEXT NOT NULL,
   created_at TIMESTAMPTZ DEFAULT NOW()
 );
-CREATE TABLE IF NOT EXISTS public.watch_history (
+
+CREATE TABLE public.watch_history (
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
   video_id UUID NOT NULL REFERENCES public.videos(id) ON DELETE CASCADE,
   watched_at TIMESTAMPTZ DEFAULT NOW(),
   PRIMARY KEY (user_id, video_id)
 );
 
--- Enable RLS
 ALTER TABLE public.channels ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.videos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.video_likes ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.subscriptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.comments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.watch_history ENABLE ROW LEVEL SECURITY;
-DO $$ BEGIN
-  CREATE POLICY "pub_r_channels" ON public.channels FOR SELECT USING (true);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "auth_i_channels" ON public.channels FOR INSERT WITH CHECK (auth.uid() = user_id);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "own_u_channels" ON public.channels FOR UPDATE USING (auth.uid() = user_id);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "pub_r_videos" ON public.videos FOR SELECT USING (true);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "chan_i_videos" ON public.videos FOR INSERT WITH CHECK (
-    EXISTS (SELECT 1 FROM public.channels WHERE id = channel_id AND user_id = auth.uid())
-  );
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "own_u_videos" ON public.videos FOR UPDATE USING (true);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "pub_r_likes" ON public.video_likes FOR SELECT USING (true);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "own_likes" ON public.video_likes FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "pub_r_subs" ON public.subscriptions FOR SELECT USING (true);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "own_subs" ON public.subscriptions FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "pub_r_comments" ON public.comments FOR SELECT USING (true);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "own_w_comments" ON public.comments FOR INSERT WITH CHECK (auth.uid() = user_id);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;
-DO $$ BEGIN
-  CREATE POLICY "own_history" ON public.watch_history FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
-  EXCEPTION WHEN duplicate_object THEN NULL; END $$;`;
+
+CREATE POLICY "pub_r_channels" ON public.channels FOR SELECT USING (true);
+CREATE POLICY "auth_i_channels" ON public.channels FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "own_u_channels" ON public.channels FOR UPDATE USING (auth.uid() = user_id);
+CREATE POLICY "pub_r_videos" ON public.videos FOR SELECT USING (true);
+CREATE POLICY "chan_i_videos" ON public.videos FOR INSERT WITH CHECK (
+  EXISTS (SELECT 1 FROM public.channels WHERE id = channel_id AND user_id = auth.uid())
+);
+CREATE POLICY "own_u_videos" ON public.videos FOR UPDATE USING (true);
+CREATE POLICY "pub_r_likes" ON public.video_likes FOR SELECT USING (true);
+CREATE POLICY "own_likes" ON public.video_likes FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "pub_r_subs" ON public.subscriptions FOR SELECT USING (true);
+CREATE POLICY "own_subs" ON public.subscriptions FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "pub_r_comments" ON public.comments FOR SELECT USING (true);
+CREATE POLICY "own_w_comments" ON public.comments FOR INSERT WITH CHECK (auth.uid() = user_id);
+CREATE POLICY "own_history" ON public.watch_history FOR ALL USING (auth.uid() = user_id) WITH CHECK (auth.uid() = user_id);
+
+-- Storage policies
+DROP POLICY IF EXISTS "auth_upload_vidcube" ON storage.objects;
+DROP POLICY IF EXISTS "pub_read_vidcube" ON storage.objects;
+DROP POLICY IF EXISTS "own_update_vidcube" ON storage.objects;
+DROP POLICY IF EXISTS "own_delete_vidcube" ON storage.objects;
+
+CREATE POLICY "auth_upload_vidcube" ON storage.objects FOR INSERT TO authenticated WITH CHECK (bucket_id = 'vidcube');
+CREATE POLICY "pub_read_vidcube" ON storage.objects FOR SELECT TO public USING (bucket_id = 'vidcube');
+CREATE POLICY "own_update_vidcube" ON storage.objects FOR UPDATE TO authenticated USING (bucket_id = 'vidcube');
+CREATE POLICY "own_delete_vidcube" ON storage.objects FOR DELETE TO authenticated USING (bucket_id = 'vidcube');`;
 
 // ── SUPABASE FETCH ──
 let authToken = localStorage.getItem('vc_token') || null;
@@ -823,15 +790,54 @@ async function authFetch(path, body) {
   return { ok: res.ok, data: await res.json() };
 }
 
-async function storageUpload(bucket, path, file) {
-  const res = await fetch(`${SB}/storage/v1/object/${bucket}/${path}`, {
-    method: 'POST',
-    headers: { 'apikey': KEY, 'Authorization': `Bearer ${authToken || KEY}`, 'x-upsert': 'true', 'Content-Type': file.type },
-    body: file
+// ── FIXED STORAGE UPLOAD ──
+// Uses XMLHttpRequest for progress tracking and proper error reporting
+async function storageUpload(filePath, file, onProgress) {
+  return new Promise((resolve) => {
+    const xhr = new XMLHttpRequest();
+    const url = `${SB}/storage/v1/object/${BUCKET}/${filePath}`;
+
+    xhr.open('POST', url);
+    xhr.setRequestHeader('apikey', KEY);
+    xhr.setRequestHeader('Authorization', `Bearer ${authToken || KEY}`);
+    xhr.setRequestHeader('x-upsert', 'true');
+    // Do NOT set Content-Type manually — let browser set it with boundary for binary
+
+    xhr.upload.onprogress = (e) => {
+      if (e.lengthComputable && onProgress) {
+        onProgress(Math.round((e.loaded / e.total) * 100));
+      }
+    };
+
+    xhr.onload = () => {
+      let data;
+      try { data = JSON.parse(xhr.responseText); } catch { data = xhr.responseText; }
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve({ ok: true, data });
+      } else {
+        resolve({ ok: false, data, status: xhr.status });
+      }
+    };
+
+    xhr.onerror = () => resolve({ ok: false, data: { message: 'Network error during upload' } });
+
+    // Send raw file — Supabase storage accepts raw binary
+    xhr.setRequestHeader('Content-Type', file.type || 'application/octet-stream');
+    xhr.send(file);
   });
-  return { ok: res.ok, data: await res.json() };
 }
-function storageUrl(bucket, path) { return `${SB}/storage/v1/object/public/${bucket}/${path}`; }
+
+function storageUrl(path) {
+  return `${SB}/storage/v1/object/public/${BUCKET}/${path}`;
+}
+
+// Check bucket exists before uploading
+async function checkBucket() {
+  const res = await fetch(`${SB}/storage/v1/bucket/${BUCKET}`, {
+    headers: { 'apikey': KEY, 'Authorization': `Bearer ${authToken || KEY}` }
+  });
+  return res.ok;
+}
 
 // ── STATE ──
 let allVideos = [], allChannels = [], shortsVideos = [];
@@ -859,14 +865,14 @@ async function restoreSession() {
     const u = await res.json();
     setUser(u);
   } else {
-    authToken = null; localStorage.removeItem('vc_token');
+    authToken = null;
+    localStorage.removeItem('vc_token');
     updateAuthUI();
   }
 }
 
 function setUser(u) {
   currentUser = u;
-  authToken = localStorage.getItem('vc_token') || authToken;
   updateAuthUI();
   findMyChannel();
 }
@@ -896,8 +902,9 @@ function updateAuthUI() {
       if (sbAv) sbAv.textContent = ltr;
     }
     document.getElementById('comment-my-ltr').textContent = ltr;
-    if (myChannel?.avatar_url) document.getElementById('comment-my-av').innerHTML = `<img src="${myChannel.avatar_url}" style="width:100%;height:100%;object-fit:cover"/>`;
-    // Sidebar mobile section
+    if (myChannel?.avatar_url) {
+      document.getElementById('comment-my-av').innerHTML = `<img src="${myChannel.avatar_url}" style="width:100%;height:100%;object-fit:cover"/>`;
+    }
     if (sbUname) sbUname.textContent = uname;
     if (sbSection) sbSection.style.display = 'flex';
     if (sbUserRow) sbUserRow.style.display = 'flex';
@@ -986,7 +993,6 @@ async function openPlayer(videoId) {
   currentVideo = v;
   isLiked = false; isSubbed = false;
 
-  // Build video element
   const wrap = document.getElementById('pv-wrap');
   if (isVideoFile(v.video_url)) {
     wrap.innerHTML = `<video controls autoplay src="${esc(v.video_url)}"></video>`;
@@ -1002,7 +1008,9 @@ async function openPlayer(videoId) {
 
   const ltr = (ch.name||'?')[0].toUpperCase();
   const pchAv = document.getElementById('pch-av');
-  pchAv.innerHTML = ch.avatar_url ? `<img src="${esc(ch.avatar_url)}" onerror="this.style.display='none'"/><div class="pch-letter" style="display:none">${ltr}</div>` : `<div class="pch-letter">${ltr}</div>`;
+  pchAv.innerHTML = ch.avatar_url
+    ? `<img src="${esc(ch.avatar_url)}" onerror="this.style.display='none'"/><div class="pch-letter" style="display:none">${ltr}</div>`
+    : `<div class="pch-letter">${ltr}</div>`;
   document.getElementById('pch-name').textContent = ch.name || 'Unknown Channel';
   document.getElementById('pch-subs').textContent = `${fmtNum(ch.subscribers||0)} subscribers`;
   document.getElementById('p-sub').className = '';
@@ -1010,7 +1018,6 @@ async function openPlayer(videoId) {
   document.getElementById('p-desc-s').textContent = `${fmtNum(v.views||0)} views • ${timeAgo(v.created_at)}`;
   document.getElementById('p-desc-t').textContent = v.description || '';
 
-  // Up next
   const others = allVideos.filter(x => x.id !== videoId).slice(0, 15);
   document.getElementById('sv-list').innerHTML = others.map(ov => {
     const oc = ov.channels || allChannels.find(c => c.id === ov.channel_id) || {};
@@ -1020,39 +1027,31 @@ async function openPlayer(videoId) {
     </div>`;
   }).join('');
 
-  // Check if user liked
   if (currentUser) {
     const lr = await sbGet('video_likes', `user_id=eq.${currentUser.id}&video_id=eq.${videoId}&select=video_id`);
     if (lr.ok && lr.data?.length) {
       isLiked = true;
       document.getElementById('like-btn').className = 'ap on';
     }
-    // Check sub
     const sr = await sbGet('subscriptions', `user_id=eq.${currentUser.id}&channel_id=eq.${ch.id}&select=channel_id`);
     if (sr.ok && sr.data?.length) {
       isSubbed = true;
       document.getElementById('p-sub').className = 'on';
       document.getElementById('p-sub').textContent = 'Subscribed ✓';
     }
-    // Add to history
     addToHistory(videoId);
   }
 
-  // Load comments
   loadComments(videoId);
-
   document.getElementById('player').classList.add('open');
   document.getElementById('player').scrollTop = 0;
-
-  // Inc views
   sbPatch('videos', `id=eq.${videoId}`, { views: (v.views||0) + 1 });
   v.views = (v.views||0) + 1;
 }
 
 function closePlayer() {
   document.getElementById('player').classList.remove('open');
-  const wrap = document.getElementById('pv-wrap');
-  wrap.innerHTML = '';
+  document.getElementById('pv-wrap').innerHTML = '';
   currentVideo = null;
 }
 
@@ -1067,8 +1066,7 @@ async function toggleLike() {
   if (!currentVideo) return;
   const vid = currentVideo.id;
   if (isLiked) {
-    const r = await sbDel('video_likes', `user_id=eq.${currentUser.id}&video_id=eq.${vid}`);
-    if (!r.ok) { toast('Error removing like'); return; }
+    await sbDel('video_likes', `user_id=eq.${currentUser.id}&video_id=eq.${vid}`);
     isLiked = false;
     currentVideo.likes = Math.max(0, (currentVideo.likes||1) - 1);
     document.getElementById('like-btn').className = 'ap';
@@ -1076,8 +1074,7 @@ async function toggleLike() {
     sbPatch('videos', `id=eq.${vid}`, { likes: currentVideo.likes });
     toast('Like removed');
   } else {
-    const r = await sbPost('video_likes', { user_id: currentUser.id, video_id: vid });
-    if (!r.ok) { toast('Error liking video'); return; }
+    await sbPost('video_likes', { user_id: currentUser.id, video_id: vid });
     isLiked = true;
     currentVideo.likes = (currentVideo.likes||0) + 1;
     document.getElementById('like-btn').className = 'ap on';
@@ -1087,34 +1084,29 @@ async function toggleLike() {
   }
 }
 
-// ── SUBSCRIBE (in player) ──
+// ── SUBSCRIBE (player) ──
 async function toggleSub() {
   if (!currentVideo) return;
   const ch = currentVideo.channels || allChannels.find(c => c.id === currentVideo.channel_id);
   if (!ch) return;
-  await toggleChannelSubById(ch.id, ch);
-}
-
-async function toggleChannelSubById(channelId, ch) {
-  if (!currentUser) return;
   if (isSubbed) {
-    await sbDel('subscriptions', `user_id=eq.${currentUser.id}&channel_id=eq.${channelId}`);
-    await sbPatch('channels', `id=eq.${channelId}`, { subscribers: Math.max(0, (ch.subscribers||1)-1) });
+    await sbDel('subscriptions', `user_id=eq.${currentUser.id}&channel_id=eq.${ch.id}`);
+    await sbPatch('channels', `id=eq.${ch.id}`, { subscribers: Math.max(0,(ch.subscribers||1)-1) });
     isSubbed = false;
+    ch.subscribers = Math.max(0,(ch.subscribers||1)-1);
     document.getElementById('p-sub').className = '';
     document.getElementById('p-sub').textContent = 'Subscribe';
-    if (ch) ch.subscribers = Math.max(0, (ch.subscribers||1)-1);
-    document.getElementById('pch-subs').textContent = `${fmtNum(ch?.subscribers||0)} subscribers`;
-    toast(`Unsubscribed from ${ch?.name}`);
+    document.getElementById('pch-subs').textContent = `${fmtNum(ch.subscribers)} subscribers`;
+    toast(`Unsubscribed from ${ch.name}`);
   } else {
-    await sbPost('subscriptions', { user_id: currentUser.id, channel_id: channelId });
-    await sbPatch('channels', `id=eq.${channelId}`, { subscribers: (ch.subscribers||0)+1 });
+    await sbPost('subscriptions', { user_id: currentUser.id, channel_id: ch.id });
+    await sbPatch('channels', `id=eq.${ch.id}`, { subscribers: (ch.subscribers||0)+1 });
     isSubbed = true;
+    ch.subscribers = (ch.subscribers||0)+1;
     document.getElementById('p-sub').className = 'on';
     document.getElementById('p-sub').textContent = 'Subscribed ✓';
-    if (ch) ch.subscribers = (ch.subscribers||0)+1;
-    document.getElementById('pch-subs').textContent = `${fmtNum(ch?.subscribers||0)} subscribers`;
-    toast(`Subscribed to ${ch?.name}! 🔔`);
+    document.getElementById('pch-subs').textContent = `${fmtNum(ch.subscribers)} subscribers`;
+    toast(`Subscribed to ${ch.name}! 🔔`);
   }
 }
 
@@ -1127,9 +1119,9 @@ async function toggleChannelSub() {
   const btn = document.getElementById('chan-sub-btn');
   if (chanPageSubbed) {
     await sbDel('subscriptions', `user_id=eq.${currentUser.id}&channel_id=eq.${viewingChannelId}`);
-    await sbPatch('channels', `id=eq.${viewingChannelId}`, { subscribers: Math.max(0, (ch.subscribers||1)-1) });
+    await sbPatch('channels', `id=eq.${viewingChannelId}`, { subscribers: Math.max(0,(ch.subscribers||1)-1) });
     chanPageSubbed = false;
-    ch.subscribers = Math.max(0, (ch.subscribers||1)-1);
+    ch.subscribers = Math.max(0,(ch.subscribers||1)-1);
     btn.className = '';
     btn.textContent = 'Subscribe';
     document.getElementById('chan-sub-info-el').textContent = `${fmtNum(ch.subscribers)} subscribers`;
@@ -1146,9 +1138,7 @@ async function toggleChannelSub() {
   }
 }
 
-// ── SHARE ──
 function shareVid() {
-  const url = currentVideo ? `${SB}/storage/v1/object/public/vidcube/videos/${currentVideo.id}` : window.location.href;
   if (navigator.clipboard) navigator.clipboard.writeText(window.location.href).then(() => toast('Link copied!'));
   else toast('Share this page link');
 }
@@ -1249,12 +1239,11 @@ function renderShorts() {
   feed.innerHTML = shortsVideos.map((v, i) => {
     const ch = v.channels || allChannels.find(c => c.id === v.channel_id) || {};
     const ltr = (ch.name||'?')[0].toUpperCase();
-    const src = i === 0 ? makeEmbedSrc(v.video_url) : '';
-    const dataSrc = makeEmbedSrc(v.video_url);
     const isVid = isVideoFile(v.video_url);
+    const dataSrc = isVid ? v.video_url : makeEmbedSrc(v.video_url);
     const media = isVid
       ? `<video src="${esc(v.video_url)}" controls loop playsinline ${i===0?'autoplay':''}></video>`
-      : `<iframe src="${src}" data-src="${dataSrc}" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
+      : `<iframe src="${i===0?dataSrc:''}" data-src="${dataSrc}" allowfullscreen allow="autoplay; encrypted-media"></iframe>`;
     return `<div class="sh-slide">
       ${media}
       <div class="sh-right">
@@ -1292,6 +1281,7 @@ function renderShorts() {
   }, { threshold: 0.6 });
   slides.forEach(s => obs.observe(s));
 }
+
 function toggleShortLike(btn) {
   const span = btn.querySelector('span');
   const ic = btn.querySelector('.ic');
@@ -1316,7 +1306,7 @@ async function openChannelPage(channelId) {
 
   const bigAv = document.getElementById('chan-big-av');
   bigAv.innerHTML = ch.avatar_url
-    ? `<img src="${esc(ch.avatar_url)}" onerror="this.style.display='none'"/><span>${(ch.name||'?')[0].toUpperCase()}</span>`
+    ? `<img src="${esc(ch.avatar_url)}" onerror="this.style.display='none'"/><span style="display:none">${(ch.name||'?')[0].toUpperCase()}</span>`
     : `<span>${(ch.name||'?')[0].toUpperCase()}</span>`;
 
   const isMine = currentUser && ch.user_id === currentUser.id;
@@ -1354,7 +1344,7 @@ function switchChanTab(tab, el) {
   } else if (tab === 'shorts') {
     const ss = shortsVideos.filter(v => v.channel_id === viewingChannelId);
     content.innerHTML = ss.length
-      ? `<div style="display:flex;gap:8px;flex-wrap:wrap">${ss.map(v => `<div style="width:152px;cursor:pointer;border-radius:10px;overflow:hidden;background:var(--surface2)" onclick="openPlayer('${v.id}')"><img src="${esc(v.thumbnail_url||'')}" style="width:100%;height:270px;object-fit:cover"/><div style="padding:7px;font-size:12px;font-weight:600">${esc(v.title)}</div></div>`).join('')}</div>`
+      ? `<div style="display:flex;gap:8px;flex-wrap:wrap">${ss.map(v => `<div style="width:152px;cursor:pointer;border-radius:10px;overflow:hidden;background:var(--surface2)" onclick="openPlayer('${v.id}')"><img src="${esc(v.thumbnail_url||'')}" style="width:100%;height:270px;object-fit:cover" onerror="this.src='https://placehold.co/152x270/1e1e2a/555?text=Short'"/><div style="padding:7px;font-size:12px;font-weight:600">${esc(v.title)}</div></div>`).join('')}</div>`
       : `<div class="empty"><div class="eicon">⚡</div><h2>No Shorts yet</h2></div>`;
   } else {
     content.innerHTML = `<div style="padding:16px"><p style="font-size:15px;font-weight:700;margin-bottom:8px">${esc(ch?.name||'')}</p><p style="color:var(--text2);font-size:13px;line-height:1.6">${esc(ch?.description||'No description.')}</p><p style="color:var(--text2);font-size:12px;margin-top:10px">Joined ${ch ? new Date(ch.created_at).toLocaleDateString('en-US',{year:'numeric',month:'long'}) : ''}</p></div>`;
@@ -1384,7 +1374,9 @@ function toggleAuthMode() {
   document.getElementById('auth-sub').textContent = isSign ? 'Join the VidCube community' : 'Welcome back to VidCube';
   document.getElementById('auth-signup-fields').style.display = isSign ? 'block' : 'none';
   document.getElementById('auth-submit-btn').textContent = isSign ? 'Create Account' : 'Sign In';
-  document.getElementById('auth-switch').innerHTML = isSign ? 'Already have an account? <span onclick="toggleAuthMode()">Sign In</span>' : 'No account? <span onclick="toggleAuthMode()">Sign Up</span>';
+  document.getElementById('auth-switch').innerHTML = isSign
+    ? 'Already have an account? <span onclick="toggleAuthMode()">Sign In</span>'
+    : 'No account? <span onclick="toggleAuthMode()">Sign Up</span>';
   document.getElementById('auth-msg').style.display = 'none';
 }
 
@@ -1402,7 +1394,9 @@ async function submitAuth() {
     if (!r.ok) { toast('Signup error: ' + (r.data?.msg || r.data?.message || 'Unknown error')); return; }
     const msg = document.getElementById('auth-msg');
     msg.style.display = 'block';
-    msg.textContent = r.data.user?.confirmation_sent_at ? '✅ Check your email to confirm your account, then sign in.' : '✅ Account created! You can now sign in.';
+    msg.textContent = r.data.user?.confirmation_sent_at
+      ? '✅ Check your email to confirm your account, then sign in.'
+      : '✅ Account created! You can now sign in.';
     toggleAuthMode();
   } else {
     const r = await authFetch('token?grant_type=password', { email, password: pass });
@@ -1412,7 +1406,7 @@ async function submitAuth() {
     localStorage.setItem('vc_token', authToken);
     setUser(r.data.user);
     closeModal('m-auth');
-    toast(`Welcome back! 👋`);
+    toast('Welcome back! 👋');
   }
 }
 
@@ -1443,17 +1437,24 @@ async function createChannel() {
   if (newAvFile) {
     const ext = newAvFile.name.split('.').pop();
     const path = `avatars/${currentUser.id}.${ext}`;
-    const up = await storageUpload('vidcube', path, newAvFile);
-    if (up.ok) avatarUrl = storageUrl('vidcube', path);
+    const up = await storageUpload(path, newAvFile);
+    if (up.ok) avatarUrl = storageUrl(path);
   }
 
   const handle = '@' + name.toLowerCase().replace(/[^a-z0-9]/g,'').slice(0,28) + '_' + Date.now().toString(36);
-  const r = await sbPost('channels', { user_id: currentUser.id, name, handle, description: document.getElementById('f-ch-desc').value.trim(), avatar_url: avatarUrl });
+  const r = await sbPost('channels', {
+    user_id: currentUser.id,
+    name,
+    handle,
+    description: document.getElementById('f-ch-desc').value.trim(),
+    avatar_url: avatarUrl
+  });
   btn.disabled = false; btn.textContent = 'Create Channel';
   if (!r.ok) { toast('Error: ' + (r.data?.message || r.status)); return; }
 
   const created = Array.isArray(r.data) ? r.data[0] : r.data;
-  myChannel = created; allChannels.push(created);
+  myChannel = created;
+  allChannels.push(created);
   updateAuthUI();
   closeModal('m-create-chan');
   toast('Channel created! 🎉');
@@ -1467,7 +1468,9 @@ function openEditChannel() {
   document.getElementById('ef-name').value = myChannel.name || '';
   document.getElementById('ef-desc').value = myChannel.description || '';
   document.getElementById('edit-av-ltr').textContent = (myChannel.name||'?')[0].toUpperCase();
-  if (myChannel.avatar_url) document.getElementById('edit-av-prev').innerHTML = `<img src="${myChannel.avatar_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+  if (myChannel.avatar_url) {
+    document.getElementById('edit-av-prev').innerHTML = `<img src="${myChannel.avatar_url}" style="width:100%;height:100%;object-fit:cover;border-radius:50%"/>`;
+  }
   openModal('m-edit-chan');
 }
 
@@ -1479,8 +1482,8 @@ async function saveEditChannel() {
   if (editAvFile) {
     const ext = editAvFile.name.split('.').pop();
     const path = `avatars/${currentUser.id}.${ext}`;
-    const up = await storageUpload('vidcube', path, editAvFile);
-    if (up.ok) avatarUrl = storageUrl('vidcube', path);
+    const up = await storageUpload(path, editAvFile);
+    if (up.ok) avatarUrl = storageUrl(path);
   }
   const name = document.getElementById('ef-name').value.trim();
   const desc = document.getElementById('ef-desc').value.trim();
@@ -1489,8 +1492,11 @@ async function saveEditChannel() {
   if (!r.ok) { toast('Save failed'); return; }
   myChannel = { ...myChannel, name, description: desc, avatar_url: avatarUrl };
   allChannels = allChannels.map(c => c.id === myChannel.id ? myChannel : c);
-  updateAuthUI(); closeModal('m-edit-chan'); toast('Channel updated!');
-  editAvFile = null; openChannelPage(myChannel.id);
+  updateAuthUI();
+  closeModal('m-edit-chan');
+  toast('Channel updated!');
+  editAvFile = null;
+  openChannelPage(myChannel.id);
 }
 
 // ── UPLOAD ──
@@ -1509,10 +1515,16 @@ function setVideoFile(f) {
     document.getElementById('f-vtitle').value = f.name.replace(/\.[^.]+$/, '');
   }
 }
+
 function openUpload() {
   if (!myChannel) { openModal('m-create-chan'); return; }
   openModal('m-upload');
 }
+
+function setUploadStatus(msg) {
+  document.getElementById('upload-status').textContent = msg;
+}
+
 async function submitUpload() {
   if (!currentUser || !myChannel) { toast('Create a channel first'); return; }
   if (!selectedVideoFile) { toast('Select a video file first'); return; }
@@ -1520,75 +1532,139 @@ async function submitUpload() {
   if (!title) { toast('Enter a title'); return; }
 
   const btn = document.getElementById('upload-btn-submit');
-  btn.disabled = true; btn.textContent = 'Uploading…';
   const prog = document.getElementById('upload-prog');
   const fill = document.getElementById('upload-fill');
-  prog.style.display = 'block'; fill.style.width = '10%';
+  btn.disabled = true; btn.textContent = 'Uploading…';
+  prog.style.display = 'block';
+  fill.style.width = '5%';
+  setUploadStatus('Checking storage bucket…');
 
+  // Check bucket first
+  const bucketOk = await checkBucket();
+  if (!bucketOk) {
+    btn.disabled = false; btn.textContent = 'Upload';
+    prog.style.display = 'none';
+    setUploadStatus('');
+    toast('❌ Storage bucket "vidcube" not found. Go to Supabase → Storage → New bucket → name it "vidcube" → set Public → Save.');
+    return;
+  }
+
+  setUploadStatus('Uploading video file…');
   const ext = selectedVideoFile.name.split('.').pop();
   const vidPath = `videos/${myChannel.id}/${Date.now()}.${ext}`;
-  const up = await storageUpload('vidcube', vidPath, selectedVideoFile);
-  fill.style.width = '70%';
-  if (!up.ok) { btn.disabled = false; btn.textContent = 'Upload'; prog.style.display = 'none'; toast('Video upload failed: ' + (up.data?.message || 'Storage error. Is the vidcube bucket created and public?')); return; }
 
-  const videoUrl = storageUrl('vidcube', vidPath);
+  const up = await storageUpload(vidPath, selectedVideoFile, (pct) => {
+    fill.style.width = `${Math.round(pct * 0.8)}%`; // 0–80% for upload
+    setUploadStatus(`Uploading… ${pct}%`);
+  });
+
+  if (!up.ok) {
+    btn.disabled = false; btn.textContent = 'Upload';
+    prog.style.display = 'none';
+    setUploadStatus('');
+    const errMsg = up.data?.error || up.data?.message || `HTTP ${up.status}`;
+    toast(`❌ Upload failed: ${errMsg}`);
+    console.error('Storage upload error:', up);
+    return;
+  }
+
+  fill.style.width = '85%';
+  setUploadStatus('Saving video details…');
+
+  const videoUrl = storageUrl(vidPath);
   const thumbInput = document.getElementById('f-vthumb').value.trim();
   const tags = document.getElementById('f-vtags').value.split(',').map(t => t.trim()).filter(Boolean);
-  fill.style.width = '90%';
 
   const r = await sbPost('videos', {
-    channel_id: myChannel.id, title,
+    channel_id: myChannel.id,
+    title,
     description: document.getElementById('f-vdesc').value.trim(),
     video_url: videoUrl,
     thumbnail_url: thumbInput || '',
     duration: document.getElementById('f-vdur').value.trim(),
     is_short: document.getElementById('f-short').checked,
-    tags, views: 0, likes: 0
+    tags,
+    views: 0,
+    likes: 0
   });
 
   fill.style.width = '100%';
-  btn.disabled = false; btn.textContent = 'Upload'; prog.style.display = 'none';
+  btn.disabled = false; btn.textContent = 'Upload';
+  prog.style.display = 'none';
+  setUploadStatus('');
 
-  if (!r.ok) { toast('DB error: ' + (r.data?.message || r.status)); return; }
+  if (!r.ok) {
+    toast('DB error: ' + (r.data?.message || r.status));
+    return;
+  }
+
   const created = Array.isArray(r.data) ? r.data[0] : r.data;
   created.channels = myChannel;
-  if (created.is_short) shortsVideos.unshift(created);
-  else { allVideos.unshift(created); renderGrid(allVideos); }
-  closeModal('m-upload'); resetUploadForm(); toast('Video uploaded! 🎉');
+  if (created.is_short) {
+    shortsVideos.unshift(created);
+  } else {
+    allVideos.unshift(created);
+    renderGrid(allVideos);
+  }
+  closeModal('m-upload');
+  resetUploadForm();
+  toast('Video uploaded! 🎉');
   if (!created.is_short) openPlayer(created.id);
 }
+
 function resetUploadForm() {
   selectedVideoFile = null;
   document.getElementById('drop-label').textContent = 'Click or drag & drop your video file';
-  ['f-vtitle','f-vdesc','f-vtags','f-vdur','f-vthumb'].forEach(id => { const el = document.getElementById(id); if (el) el.value = ''; });
+  ['f-vtitle','f-vdesc','f-vtags','f-vdur','f-vthumb'].forEach(id => {
+    const el = document.getElementById(id); if (el) el.value = '';
+  });
   document.getElementById('f-short').checked = false;
   document.getElementById('upload-btn-submit').disabled = true;
   document.getElementById('vid-file').value = '';
+  setUploadStatus('');
 }
 
 // ── FILTER / SEARCH ──
 function filterChip(name, el) {
   if (el) { document.querySelectorAll('.chip').forEach(c => c.classList.remove('on')); el.classList.add('on'); }
   showView('home');
-  const filtered = name === 'All' ? allVideos : allVideos.filter(v => (v.tags||[]).some(t => t.toLowerCase() === name.toLowerCase()) || v.title.toLowerCase().includes(name.toLowerCase()));
+  const filtered = name === 'All' ? allVideos : allVideos.filter(v =>
+    (v.tags||[]).some(t => t.toLowerCase() === name.toLowerCase()) ||
+    v.title.toLowerCase().includes(name.toLowerCase())
+  );
   renderGrid(filtered);
 }
+
 document.getElementById('sin').addEventListener('keydown', e => { if (e.key === 'Enter') doSearch(); });
+
 function doSearch() {
   const q = document.getElementById('sin').value.trim().toLowerCase();
   if (!q) { goHome(); return; }
   showView('search');
-  const results = allVideos.filter(v => v.title.toLowerCase().includes(q) || (v.description||'').toLowerCase().includes(q) || (v.tags||[]).some(t => t.toLowerCase().includes(q)));
+  const results = allVideos.filter(v =>
+    v.title.toLowerCase().includes(q) ||
+    (v.description||'').toLowerCase().includes(q) ||
+    (v.tags||[]).some(t => t.toLowerCase().includes(q))
+  );
   const pg = document.getElementById('search-pg');
-  if (!results.length) { pg.innerHTML = `<div class="empty"><div class="eicon">🔍</div><h2>No results</h2><p>No videos found for "${esc(q)}"</p></div>`; return; }
+  if (!results.length) {
+    pg.innerHTML = `<div class="empty"><div class="eicon">🔍</div><h2>No results</h2><p>No videos found for "${esc(q)}"</p></div>`;
+    return;
+  }
   pg.innerHTML = results.map(v => {
     const ch = v.channels || allChannels.find(c => c.id === v.channel_id) || {};
     return `<div class="sri" onclick="openPlayer('${v.id}')">
       <img class="sri-th" src="${esc(v.thumbnail_url||'')}" onerror="this.src='https://placehold.co/280x158/1e1e2a/555?text=VidCube'"/>
-      <div><div class="sri-title">${esc(v.title)}</div><div class="sri-meta">${fmtNum(v.views||0)} views • ${timeAgo(v.created_at)} • ${esc(v.duration||'')}</div><div class="sri-meta">${esc(ch.name||'')}</div><div class="sri-desc">${esc(v.description||'')}</div></div>
+      <div>
+        <div class="sri-title">${esc(v.title)}</div>
+        <div class="sri-meta">${fmtNum(v.views||0)} views • ${timeAgo(v.created_at)} • ${esc(v.duration||'')}</div>
+        <div class="sri-meta">${esc(ch.name||'')}</div>
+        <div class="sri-desc">${esc(v.description||'')}</div>
+      </div>
     </div>`;
   }).join('');
 }
+
 function goHome() {
   document.getElementById('sin').value = '';
   closePlayer();
@@ -1608,7 +1684,6 @@ function showView(name) {
   document.getElementById('chips').style.display = name === 'home' ? 'flex' : 'none';
 }
 
-// ── REQUIRE AUTH ──
 function requireAuth(fn) {
   if (!currentUser) { openModal('m-auth'); return; }
   fn();
@@ -1635,7 +1710,10 @@ function ytIdFrom(url) {
   return m ? m[1] : null;
 }
 function isVideoFile(url) {
-  return url && !ytIdFrom(url) && (url.includes('.mp4') || url.includes('.webm') || url.includes('.mov') || url.includes('.ogg') || url.includes('supabase'));
+  return url && !ytIdFrom(url) && (
+    url.includes('.mp4') || url.includes('.webm') || url.includes('.mov') ||
+    url.includes('.ogg') || url.includes('supabase')
+  );
 }
 function timeAgo(ts) {
   if (!ts) return '';
@@ -1653,16 +1731,24 @@ function fmtNum(n) {
   if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
   return String(n);
 }
-function esc(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function esc(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
 
 // ── SETUP ──
 function openSetup() { openModal('m-setup'); }
-function copySQL() { navigator.clipboard?.writeText(SETUP_SQL).then(() => toast('SQL copied!')).catch(() => toast('Select and copy manually')); }
+function copySQL() {
+  navigator.clipboard?.writeText(SETUP_SQL)
+    .then(() => toast('SQL copied!'))
+    .catch(() => toast('Select and copy manually'));
+}
 
 // ── MODALS ──
 function openModal(id) { document.getElementById(id).classList.add('open'); }
 function closeModal(id) { document.getElementById(id).classList.remove('open'); }
-document.querySelectorAll('.mov').forEach(m => { m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); }); });
+document.querySelectorAll('.mov').forEach(m => {
+  m.addEventListener('click', e => { if (e.target === m) closeModal(m.id); });
+});
 
 // ── SIDEBAR ──
 function closeSidebar() { document.body.classList.remove('sb-open'); }
@@ -1670,28 +1756,35 @@ document.getElementById('hbg').addEventListener('click', () => {
   if (window.innerWidth <= 640) document.body.classList.toggle('sb-open');
   else document.body.classList.toggle('mini');
 });
-// Close sidebar on mobile when any nav item is tapped
 document.getElementById('sidebar').addEventListener('click', () => {
   if (window.innerWidth <= 640) closeSidebar();
 });
-function setNav(el) { document.querySelectorAll('.nit').forEach(n => n.classList.remove('on')); el?.classList.add('on'); }
+function setNav(el) {
+  document.querySelectorAll('.nit').forEach(n => n.classList.remove('on'));
+  el?.classList.add('on');
+}
 
 // ── TOAST ──
 let toastT;
 function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
-  clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2800);
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 3500);
 }
 
 // ── KEYBOARD ──
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
-    if (document.querySelector('.mov.open')) { document.querySelectorAll('.mov.open').forEach(m => closeModal(m.id)); return; }
+    if (document.querySelector('.mov.open')) {
+      document.querySelectorAll('.mov.open').forEach(m => closeModal(m.id)); return;
+    }
     if (document.getElementById('shorts-page').classList.contains('open')) { closeShorts(); return; }
     if (document.getElementById('player').classList.contains('open')) { closePlayer(); showView('home'); return; }
   }
-  if (e.key === '/' && !['INPUT','TEXTAREA'].includes(e.target.tagName)) { e.preventDefault(); document.getElementById('sin').focus(); }
+  if (e.key === '/' && !['INPUT','TEXTAREA'].includes(e.target.tagName)) {
+    e.preventDefault(); document.getElementById('sin').focus();
+  }
 });
 
 init();
